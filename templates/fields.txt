@@ -1,0 +1,15 @@
+MemberNumber
+MemberName
+ServiceType
+InvoicedAmount
+SchemeName
+ProviderName
+ClinicalSummary
+ClaimDetails
+ClaimText
+Timestamp
+EmailSubject
+EmailBody
+IsChronic
+IsSmart
+EmailReceivedTime

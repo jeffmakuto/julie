@@ -1,0 +1,4 @@
+Rewrite the following error message for a non-technical audience. 
+Explain clearly and simply what went wrong:
+
+{ERROR_MESSAGE}

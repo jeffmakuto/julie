@@ -1,0 +1,17 @@
+You are given medical claim text.
+
+Identify the main benefit type from this list only:
+- outpatient
+- inpatient
+- dental
+- optical
+- pharmacy
+- physiotherapy
+- maternity
+- consultation
+- not covered
+
+Respond with exactly ONE word from the list above, in lowercase, with no explanation.
+
+Claim text:
+{claim_text}

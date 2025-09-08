@@ -1,0 +1,15 @@
+You are a medical assistant. Please carefully read the following medical report and provide a concise summary containing:
+
+1. Diagnosis
+2. Treatment recommended or given
+3. Prescriptions if any
+
+If any of these sections are missing, write "Not available" for that section.
+
+Medical report:
+{claim_text}
+
+Summary:
+Diagnosis:
+Treatment:
+Prescriptions:

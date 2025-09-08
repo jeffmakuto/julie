@@ -1,0 +1,11 @@
+Dear Team,
+
+An error occurred while processing a claim.
+
+Sender: {sender}
+Subject: {subject}
+Received Time: {received_time}
+Details: {error_details}
+
+Regards,
+Julie

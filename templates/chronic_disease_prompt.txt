@@ -1,0 +1,6 @@
+You are a medical claims analyst.  
+Given the following claim text, determine if it relates to a chronic disease (like diabetes, hypertension, asthma, HIV, etc).  
+Answer strictly with "Yes" or "No".
+
+Claim text:
+{claim_text}

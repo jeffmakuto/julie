@@ -1,0 +1,10 @@
+MemberNumber
+MemberName
+ServiceType
+InvoicedAmount
+SchemeName
+ProviderName
+ClaimDetails
+EmailSubject
+IsChronic
+IsSmart

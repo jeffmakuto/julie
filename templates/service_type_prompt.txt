@@ -1,0 +1,16 @@
+You are given medical claim text.
+
+Identify the main medical service type from this list only:
+- radiology
+- pathology
+- surgery
+- consultation
+- pharmacy
+- laboratory
+- physiotherapy
+- not medically related
+
+Respond with exactly ONE word from the list above, in lowercase, with no explanation.
+
+Claim text:
+{claim_text}

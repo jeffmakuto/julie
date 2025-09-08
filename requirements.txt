@@ -1,0 +1,23 @@
+boto3
+requests
+pydantic
+fastapi
+uvicorn[standard]
+langchain
+langchain-community
+python-multipart
+word2number
+regex
+Pillow
+tzdata
+pgvector
+psycopg2
+pypdf
+python-docx
+beautifulsoup4
+unstructured
+apscheduler
+faiss-cpu
+langchain_aws
+ pyodbc
+ 
