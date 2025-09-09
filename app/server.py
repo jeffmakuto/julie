@@ -8,6 +8,7 @@ from orchestrator.email_poller import EmailPollingService
 from rag.rag_client import RAGRunner
 from document_ingestor.scheduler import schedule_periodic_reindex, preload_knowledge_base
 from orchestrator.rpa_reply_service import RPAReplyService
+from orchestrator.email_poller import GraphEmailClient
 from bedrock_llms.client import BedrockLLMClient
 from stores.redis import AsyncRedisCache
 
@@ -73,10 +74,11 @@ class EmailPollingAppS3:
 
             # --- RPA reply service setup ---
             logger.info("Starting RPAReplyService...")
-            llm_client = BedrockLLMClient()  # configure as needed
-            redis_client = AsyncRedisCache()  # configure as needed
+            llm_client = BedrockLLMClient()
+            redis_client = AsyncRedisCache()
+
             # For email sending via Graph
-            from orchestrator.email_poller import GraphEmailClient
+
             graph_email_client = GraphEmailClient(
                 tenant_id=os.environ["AZURE_TENANT_ID"],
                 client_id=os.environ["AZURE_CLIENT_ID"],
