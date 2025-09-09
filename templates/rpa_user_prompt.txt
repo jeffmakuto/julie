@@ -1,0 +1,5 @@
+Here is the RPA result:
+
+{rpa_result}
+
+Write a concise, polite email reply.

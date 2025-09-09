@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 from .config import ATTACHMENT_BUCKET
 from agent.langchain_agent import ClaimPipeline
-from orchestrator.notification_service import NotificationService
+from orchestrator.notification_service import GraphNotificationService
 from bedrock_llms.client import BedrockLLMClient
 from msal import ConfidentialClientApplication
 
@@ -88,6 +88,31 @@ class GraphEmailClient:
             return True
         logger.error(f"Failed to mark email {message_id} as read: {response.text}")
         return False
+    
+    def send_email(self, recipient: str, subject: str, body: str):
+        """
+        Send a simple email reply using Microsoft Graph API.
+
+        Args:
+            recipient (str): The email address of the recipient.
+            subject (str): Subject of the email.
+            body (str): Body of the email (HTML or plain text).
+        """
+        url = f"https://graph.microsoft.com/v1.0/users/{self.user_email}/sendMail"
+        message = {
+            "message": {
+                "subject": subject,
+                "body": {"contentType": "HTML", "content": body},
+                "toRecipients": [{"emailAddress": {"address": recipient}}],
+            }
+        }
+
+        headers = {**self._headers(), "Content-Type": "application/json"}
+        resp = requests.post(url, headers=headers, json=message)
+        if resp.status_code not in (200, 202):
+            raise RuntimeError(f"Failed to send email: {resp.status_code} {resp.text}")
+
+        logger.info(f"Reply sent to {recipient} with subject '{subject}'")
 
 
 # ------------------------- S3 Uploader ------------------------- #
@@ -169,19 +194,19 @@ class EmailPollingService:
             user_email=os.getenv("GRAPH_USER_EMAIL") or ""
         )
 
-        # Initialize notification service
-        self.notifier = NotificationService(
-            smtp_host=os.getenv("SMTP_HOST") or "",
-            smtp_port=int(os.getenv("SMTP_PORT", 587)),
-            sender_email=os.getenv("SENDER_EMAIL") or "",
-            sender_password=os.getenv("EMAIL_PASS") or "",
+         # Graph notification service
+        self.notifier = GraphNotificationService(
+            tenant_id=os.getenv("AZURE_TENANT_ID") or "",
+            client_id=os.getenv("AZURE_CLIENT_ID") or "",
+            client_secret=os.getenv("AZURE_CLIENT_SECRET") or "",
+            sender_email=os.getenv("GRAPH_USER_EMAIL") or "",
             non_tech_admin_emails=[
                 email.strip() for email in os.getenv("NON_TECH_ADMIN_EMAILS", "").split(",") if email.strip()
             ],
             tech_admin_emails=[
                 email.strip() for email in os.getenv("TECH_ADMIN_EMAILS", "").split(",") if email.strip()
             ],
-            llm_client=BedrockLLMClient(),
+            llm_client=BedrockLLMClient()
         )
 
         self.s3_uploader = S3Uploader(ATTACHMENT_BUCKET)
